@@ -19,7 +19,7 @@ def portal_main_page(request):
             course = form.cleaned_data['course']
             date = form.cleaned_data['date']
             comment = form.cleaned_data['comment']
-            recipients = ['glchriste@gmail.com']
+            recipients = ['wevie13@gmail.com']
             #Send Email with data
             from django.core.mail import send_mail
             send_mail('Tutoring Appointment Scheduled', comment, email, recipients)
