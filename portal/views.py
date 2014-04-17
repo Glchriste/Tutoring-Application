@@ -19,11 +19,11 @@ def portal_main_page(request):
             course = form.cleaned_data['course']
             date = form.cleaned_data['date']
             comment = form.cleaned_data['comment']
-<<<<<<< HEAD:portal/views.py
+# <<<<<<< HEAD:portal/views.py
             recipients = ['glchriste@gmail.com', 'wevie13@gmail.com']
-=======
-            recipients = ['wevie13@gmail.com']
->>>>>>> a5577930ebce31881ed307749d7fa01d02b92d19:TutoringApplication/portal/views.py
+# =======
+#             recipients = ['wevie13@gmail.com']
+# >>>>>>> a5577930ebce31881ed307749d7fa01d02b92d19:TutoringApplication/portal/views.py
             #Send Email with data
             from django.core.mail import send_mail
             send_mail('Tutoring Appointment Scheduled', comment, email, recipients)
