@@ -31,7 +31,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] 
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'portal',
     'django.contrib.staticfiles',
+    'django_bootstrap_calendar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -61,7 +62,20 @@ ROOT_URLCONF = 'TutoringApplication.urls'
 
 WSGI_APPLICATION = 'TutoringApplication.wsgi.application'
 
+STATICFILES_DIRS = ( 
+    # Put strings here, like "/home/html/static" or "C:/www/django/static". 
+    # Always use forward slashes, even on Windows. 
+    # Don't forget to use absolute paths, not relative paths. 
+    'C:/Users/Grace/Documents/GitHub/Tutoring-Application/static',
+) 
 
+# List of finder classes that know how to find static files in 
+# various locations. 
+STATICFILES_FINDERS = ( 
+    'django.contrib.staticfiles.finders.FileSystemFinder', 
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder', 
+
+) 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
@@ -85,7 +99,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
@@ -96,6 +109,14 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 # URL of the login page.
 LOGIN_URL = '/login/'
+
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+"django.core.context_processors.debug",
+"django.core.context_processors.i18n",
+"django.core.context_processors.media",
+"django.core.context_processors.static",
+"django.core.context_processors.tz",
+"django.contrib.messages.context_processors.messages")
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
