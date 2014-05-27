@@ -22,18 +22,19 @@
 {% endblock %}
 
   {% block content %}
-    <section>
+    <!-- <section>
     <h4>Welcome, {{ user.first_name }}</h4>
-    <!-- <p>This is the main page of the web portal.</p> -->
+    <p>This is the main page of the web portal.</p>
     </section>
+ -->
 
-    
 <!-- <html>
 <body> -->
 <?php
 // header('content-type: application/json; charset=utf-8');
 header("access-control-allow-origin: *");
 ?>
+
 <div class="container">
 	<div class="jumbotron">
 		<h1>CCI Tutoring Calendar</h1><img src="{{STATIC_URL}}portal/CCI-Tutors-Logo.png" height="190" width="300">
@@ -46,7 +47,7 @@ header("access-control-allow-origin: *");
 
 	<div class="page-header">
 
-		<div class="pull-right form-inline">
+		<!-- <div class="pull-right form-inline">
 			<div class="btn-group">
 				<button class="btn btn-primary" data-calendar-nav="prev"><< Prev</button>
 				<button class="btn btn-default" data-calendar-nav="today" id="#today">Today</button>
@@ -54,11 +55,12 @@ header("access-control-allow-origin: *");
 			</div>
 			<div class="btn-group">
 				<button class="btn btn-success" data-calendar-view="year">Year</button>
-				<button class="btn btn-success active" data-calendar-view="month">Month</button>
+				<button class="btn btn-success" data-calendar-view="month">Month</button>
 				<button class="btn btn-success" data-calendar-view="week">Week</button>
 				<button class="btn btn-success" data-calendar-view="day">Day</button>
 			</div>
-		</div>
+		</div>-->
+		
 
 		<h3></h3>
 		<!-- <div id="#hours">Today's Hours: </div> -->
@@ -66,6 +68,13 @@ header("access-control-allow-origin: *");
 		<button class="btn btn-lg btn-success" data-calendar-nav="today" data-calendar-view="day" id="#hours" onclick="showHours()"><b>Today's Hours: </b></button>
 		</div>
 		<small></small>
+		<div class="pull-right form-inline">
+			{% load bootstrap_calendar %}
+			{% bootstrap_calendar_css %}
+<!-- {% bootstrap_calendar_js language="template" %}
+{% bootstrap_calendar_init language="template" %} -->
+			{% bootstrap_controls 'optional-css-classes' %} 
+		</div>
 	</div>
 
 	<div class="row">
@@ -74,7 +83,7 @@ header("access-control-allow-origin: *");
 		</div>
 		<div class="col-md-3">
 			<div class="row">
-				<select id="first_day" class="form-control">
+				<!-- <select id="first_day" class="form-control">
 					<option value="" selected="selected">First day of week language-dependant</option>
 					<option value="2">First day of week is Sunday</option>
 					<option value="1">First day of week is Monday</option>
@@ -92,7 +101,7 @@ header("access-control-allow-origin: *");
 					<option value="es-ES">Spanish (Spain)</option>
 					<option value="ru-RU">Russian</option>
 					<option value="sv-SE">Swedish</option>
-				</select>
+				</select> -->
 			<h4>Events</h4>
 			<small>Upcoming Appointments and Openings</small>
 			<ul id="eventlist" class="nav nav-list"></ul>
@@ -243,9 +252,15 @@ header("access-control-allow-origin: *");
 	<script type="text/javascript" src="{{STATIC_URL}}portal/js/calendar.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}portal/js/dailyhours.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}portal/js/date.js"></script>
-	<script type="text/javascript" src="{{STATIC_URL}}portal/js/app.js"></script>
-
+	<!-- <script type="text/javascript" src="{{STATIC_URL}}portal/js/app.js"></script> -->
+{% load bootstrap_calendar %}
+{% bootstrap_calendar_css %}
+{% bootstrap_calendar_js language="template" %}
+{% bootstrap_calendar_init language="template" %}
+{% bootstrap_calendar 'optional-css-classes' %} 
 </div>
+
+
 <script>
 	function submitForm() {
 		// variable to hold request
@@ -336,4 +351,5 @@ header("access-control-allow-origin: *");
 	}
 	// getUnixTime("18-Apr-2014 19:00:00");
 </script>
+
 {% endblock %}

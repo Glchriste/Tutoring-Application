@@ -3,7 +3,7 @@
     "use strict";
 
     var options = {
-        events_source: 'events.json.php',
+        events_source: 'http://localhost:8000/portal/json/',
         view: 'month',
         tmpl_path: 'tmpls/',
         tmpl_cache: false,

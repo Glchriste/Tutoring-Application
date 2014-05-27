@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from forms import AppointmentForm
 from models import UploadFile
 
-
 # Create your views here.
 @login_required
 def portal_main_page(request):
@@ -44,11 +43,11 @@ from utils import timestamp_to_datetime
 
 import datetime
 
-
+#Converts calendar events to JSON list
 class CalendarJsonListView(ListView):
 
     template_name = 'django_bootstrap_calendar/calendar_events.html'
-
+    #Returns the calendar events as a JSON
     def get_queryset(self):
         queryset = CalendarEvent.objects.filter()
         from_date = self.request.GET.get('from', False)

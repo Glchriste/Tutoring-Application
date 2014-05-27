@@ -11,7 +11,7 @@ class UploadFile(models.Model):
 
 from django.utils.translation import ugettext as _
 from utils import datetime_to_timestamp
-
+from django.contrib import admin
 
 
 class CalendarEvent(models.Model):
@@ -49,3 +49,10 @@ class CalendarEvent(models.Model):
 
     def __unicode__(self):
         return self.title
+
+###Admin
+class CalendarEventAdmin(admin.ModelAdmin):
+    list_display = ["title", "url", "css_class", "start", "end"]
+    list_filler = ["title"]
+    
+admin.site.register(CalendarEvent,CalendarEventAdmin)

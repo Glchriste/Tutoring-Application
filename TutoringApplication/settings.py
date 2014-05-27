@@ -138,3 +138,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'CCITutoringAppointment@gmail.com'
 EMAIL_HOST_PASSWORD = 'ccitutors'
 EMAIL_PORT = 587
+
+EVENTS_URL = '/portal/json'
