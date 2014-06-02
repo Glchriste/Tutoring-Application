@@ -23,6 +23,6 @@ A web application that allows students to make appointments with tutors in the C
 
 ###FAQ
 1. How do I remove all database entries / reset the application?
-Remove the sqlite file to remove all database entries of the application (however, you will need to run `python manage.py syncdb` again.
+Remove the sqlite file to remove all database entries of the application (however, you will need to run `python manage.py syncdb` again).
 2. Do I need to run `python manage.py syncdb` everytime I run the application?
 No, you only need to run that command once. Once the database is synced, just run python manage.py runserver` thereafter to run the application.
