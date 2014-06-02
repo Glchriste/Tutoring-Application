@@ -6,6 +6,7 @@ admin.autodiscover()
 from TutoringApplication.views import *
 from django.conf.urls import *
 #from django.conf.urls import patterns, include, url
+from TutoringApplication import views
 
 urlpatterns = patterns('',
     (r'^$', main_page),
@@ -23,9 +24,9 @@ urlpatterns = patterns('',
 
     # Web portal.
     (r'^portal/', include('portal.urls', namespace="portal")),
+    
     #(r'^$', 'portal.views.portal_main_page', name='portal_main_page'),
     #(r'^portal/$', include('portal.urls', namespace="portal", app_name="portal")),
-   
     # Serve static content.
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': 'static'}),

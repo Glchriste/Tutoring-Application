@@ -12,7 +12,12 @@ class UploadFile(models.Model):
 from django.utils.translation import ugettext as _
 from utils import datetime_to_timestamp
 from django.contrib import admin
+import forms
 
+# class Tutor(models.Model):
+#     first_name = models.CharField(max_length=100, verbose_name=('First Name'))
+#     last_name = models.CharField(max_length=100, verbose_name=('Last Name'))
+#     email = models.EmailField(max_length=255, verbose_name=('Email'))
 
 class CalendarEvent(models.Model):
     """
@@ -28,8 +33,15 @@ class CalendarEvent(models.Model):
         ('event-important', _('Important')),
     )
     title = models.CharField(max_length=255, verbose_name=_('Title'))
-    url = models.URLField(verbose_name=_('URL'))
-    css_class = models.CharField(max_length=20, verbose_name=_('CSS Class'))
+    tutor = models.CharField(max_length=50, verbose_name=('Tutor'))
+    tutor_email = models.EmailField(max_length=255, verbose_name=('Tutor Email'))
+    student = models.CharField(max_length=50, verbose_name=('Student'))
+    student_email = models.EmailField(max_length=255, verbose_name=('Student Email'))
+    course = models.CharField(max_length=50, verbose_name=('Course'))
+    #url = models.URLField(verbose_name=_('URL'))
+    url = 'http://www.example.com'
+    #css_class = models.CharField(max_length=2,choices=CSS_CLASS_CHOICES,default='event-success')
+    css_class = 'event-success'
     start = models.DateTimeField(verbose_name=_('Start Date'))
     end = models.DateTimeField(verbose_name=_('End Date'), blank=True)
 
@@ -52,7 +64,7 @@ class CalendarEvent(models.Model):
 
 ###Admin
 class CalendarEventAdmin(admin.ModelAdmin):
-    list_display = ["title", "url", "css_class", "start", "end"]
+    list_display = ["title", "tutor", "tutor_email", "student", "student_email", "css_class", "start", "end"]
     list_filler = ["title"]
     
 admin.site.register(CalendarEvent,CalendarEventAdmin)

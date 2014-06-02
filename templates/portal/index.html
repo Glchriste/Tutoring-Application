@@ -14,9 +14,12 @@
 	<meta charset="UTF-8">
 
 	<link rel="stylesheet" href="{{STATIC_URL}}portal/components/bootstrap3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-datetimepicker.min.css">
 	<!-- <link rel="stylesheet" href="components/bootstrap3/css/bootstrap-theme.min.css"> -->
 	<link rel="stylesheet" href="{{STATIC_URL}}portal/css/calendar.css">
 	<link rel="stylesheet" href="{{STATIC_URL}}css/tutoring.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-formhelpers.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/clockpicker.css">
 
 	
 {% endblock %}
@@ -34,6 +37,13 @@
 // header('content-type: application/json; charset=utf-8');
 header("access-control-allow-origin: *");
 ?>
+
+
+</head>
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/clockpicker.js"></script>
+<!-- <script type="text/javascript" src="{{STATIC_URL}}js/jquery-clockpicker.min.js"></script> -->
 
 <div class="container">
 	<div class="jumbotron">
@@ -118,7 +128,7 @@ header("access-control-allow-origin: *");
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title">Tutors</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style="overflow-y: visible;">
 				<p style="text-align: center">
 					<img src="{{STATIC_URL}}portal/tutors.png" width="623" height="216" id="#tutors-img" style="padding:10px;">
 				</p>
@@ -149,7 +159,7 @@ header("access-control-allow-origin: *");
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title">Appointment Scheduler</h4>
 				</div>
-				<div class="modal-body" style="height: 700px">
+				<div class="modal-body" style="height: 575px; left: 2.5%;">
 				<div class="container">
 	<div class="row">
 	  <div class="col-md-12">
@@ -158,13 +168,78 @@ header("access-control-allow-origin: *");
 	    <div class="alert alert-danger"><span class="glyphicon glyphicon-alert"></span><strong> Error! Please check the inputs. (If form error!)</strong></div> -->
 	  </div>
 		  <!-- <form role="form" action="http://www.glchriste.com/TutoringApp/appointment.php" method="post" id="appointment_form"> -->
-		  <form role="form" action="" onclick="submitForm()" id="appointment_form">
+		  <!-- <form role="form" action="" onclick="submitForm()" id="appointment_form"> -->
+		  <form role="form" action="/portal/make-appointment/" method="post" id="appointment_form" class="form-horizontal">
 		    <div class="col-lg-6">
-		      <div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div>
+		      <!-- <div class="well well-sm"><strong><i class="glyphicon glyphicon-ok form-control-feedback"></i> Required Field</strong></div> -->
+		      <!-- <div class="form-group"> -->
+		      {% csrf_token %}
 		      <div class="form-group">
-		      <div class="control-group">
-		            <!-- <label class="control-label">What class do you need tutoring for?</label> -->
-		            <div class="btn-group">
+		      	<label for="first_name" style="padding-top: 0px;">First Name</label>
+		        <input type="text" name="first_name" class="form-control" style="padding: 6px;" placeholder = " Enter Your First Name">
+		        <label for="last_name" style="padding-top: 10px;">Last Name</label>
+		        <input type="text" name="last_name" class="form-control" style="padding: 6px;" placeholder = " Enter Your Last Name">
+		        <label for="email" style="padding-top: 10px;">UNCC Email</label>
+		        <input type="text" name="email" class="form-control" style="padding: 6px;" placeholder = " Enter Your UNCC Email">
+		        <label for="course" style="padding-top: 10px;">What Course Do You Need Help With?</label>
+		        <!-- <input type="text" name="course" class="form-control" style="padding: 6px;" placeholder = " Enter the Course Name"> -->
+		        <select name="course" style="padding: 6px;" class="form-control">
+		        	<option value="" disabled selected>Select a Course</option>
+					<option value="ITCS 1212">ITCS 1212</option>
+					<option value="ITCS 1213">ITCS 1213</option>
+					<option value="ITIS 1212">ITIS 1212</option>
+					<option value="ITCS 2175">ITCS 2175</option>
+					<option value="ITCS 2214">ITCS 2214</option>
+					<option value="ITCS 2215">ITCS 2215</option>
+					<option value="ITIS 2110">ITIS 2110</option>
+					<option value="ITIS 2300">ITIS 2300</option>
+					<option value="ITIS 3105">ITIS 3105</option>
+					<option value="ITIS 3110">ITIS 3110</option>
+					<option value="ITIS 3200">ITIS 3200</option>
+					<option value="ITIS 3300">ITIS 3300</option>
+					<option value="ITCS 3134">ITCS 3134</option>
+					<option value="ITCS 3146">ITCS 3146</option>
+					<option value="ITCS 3152">ITCS 3152</option>
+					<option value="ITCS 3160">ITCS 3160</option>
+					<option value="ITCS 4121">ITCS 4121</option>
+					<option value="ITCS 4122">ITCS 4122</option>
+					<option value="MATH 1241">MATH 1241</option>
+					<option value="MATH 2164">MATH 2164</option>
+					<option value="STAT 1220">STAT 1220</option>
+					<option value="STAT 2122">STAT 2122</option>
+					<option value="STAT 2223">STAT 2223</option>
+					<option value="Other">Other</option>
+				</select>
+		        <label for="tutor" style="padding-top: 10px;">Name of Preferred Tutor</label>
+		        <select name="tutor" style="padding: 6px;" class="form-control">
+		        	<option value="no_preference">Anyone Available</option>
+					<option value="Grace">Grace</option>
+					<option value="David">David</option>
+					<option value="Chinmai">Chinmai</option>
+				</select>
+				<label for="date" style="padding-top: 10px;">Calendar Date</label>
+				<input type="text" id="date" name="date" class="form-control" placeholder=" Example: May 28 2014" style="padding: 6px;">
+				<label for="time" style="padding-top: 10px;">Preferred Time</label>
+				<!-- <input type="text" name="time" class="form-control" placeholder=" Example: 11:00AM. Hours: 8:00AM - 5:00PM" style="padding: 6px;"><br></br> -->
+				<div class="input-group clockpicker" id = "clockpicker" style="padding: 6px; padding-bottom: 20px;">
+				    <input type="text" class="form-control" id = "time" name="time" value="08:00AM">
+				    <span class="input-group-addon">
+				        <span class="glyphicon glyphicon-time"></span>
+				    </span>
+				</div>
+				<script type="text/javascript">
+					$('.clockpicker').clockpicker({
+					    placement: 'top',
+					    align: 'left',
+					    autoclose: true,
+					    'default': 'now'
+					});
+
+				</script>
+			<!-- </div> -->
+		     <!--  <div class="control-group">
+		     <!--      <!-- <label class="control-label">What class do you need tutoring for?</label> -->
+		     <!--       <div class="btn-group">
 					  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
 					    <b>What class do you need tutoring for?</b> <span class="caret"></span>
 					  </button>
@@ -190,18 +265,21 @@ header("access-control-allow-origin: *");
 		          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
 		      </div>
 		      <div class="form-group">
-		        <label for="InputMessage">Message</label>
+		        <label for="InputMessage">Course You Need Help With</label>
 		        <div class="input-group">
-		          <textarea name="InputMessage" id="InputMessage" class="form-control" rows="5" required></textarea>
-		          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
-		      </div>
+		          <!-- <textarea name="InputMessage" id="InputMessage" class="form-control" rows="5" required></textarea>
+		          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div> -->
+		          <!--<input type="text" class="form-control" name="InputCourse" id="InputCourse" placeholder="Enter the Course Name" required>
+		          <!--<span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div> -->
+		      <!-- </div>
 		      <div class="form-group">
 		        <label for="InputReal">What is 4+3? (just in case you're a robot)</label>
 		        <div class="input-group">
 		          <input type="text" class="form-control" name="InputReal" id="InputReal" required>
 		          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
-		      </div>
-		      <input type="submit" name="submit" id="submit" value="Submit" onclick="submitAppointment()" class="btn btn-info pull-right">
+		      </div> -->
+		      <input type="submit" name="submit" id="submit" value="Schedule Appointment" class="btn btn-info pull-right">
+		      <!-- <input type="submit" name="submit" id="submit" value="Submit" onclick="submitAppointment()" class="btn btn-info pull-right"> -->
 		    </div>
 		  </form>
 	  </div>
@@ -233,6 +311,13 @@ header("access-control-allow-origin: *");
 		</div>
 	</div>
 
+	<!-- Date Picker for the Date Input in the Appointment Form -->
+	<script>
+	  $(function() {
+	    $( "#date" ).datepicker();
+	  });
+	</script>
+
 	<script type="text/javascript" src="{{STATIC_URL}}portal/components/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}portal/components/underscore/underscore-min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}portal/components/bootstrap3/js/bootstrap.min.js"></script>
@@ -252,6 +337,10 @@ header("access-control-allow-origin: *");
 	<script type="text/javascript" src="{{STATIC_URL}}portal/js/calendar.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}portal/js/dailyhours.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}portal/js/date.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-formhelpers.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<!-- <script type="text/javascript" src="{{STATIC_URL}}portal/js/app.js"></script> -->
 {% load bootstrap_calendar %}
 {% bootstrap_calendar_css %}
@@ -260,62 +349,79 @@ header("access-control-allow-origin: *");
 {% bootstrap_calendar 'optional-css-classes' %} 
 </div>
 
-
+<div id='output'></div>
 <script>
 	function submitForm() {
-		// variable to hold request
-		var request;
-		// bind to the submit event of our form
-		$("#appointment_form").submit(function(event){
-	    	// abort any pending request
-		    if (request) {
-		        request.abort();
-		    }
-		    // setup some local variables
-		    var $form = $(this);
-		    // let's select and cache all the fields
-		    var $inputs = $form.find("input, email, text, select, button, textarea");
-		    // serialize the data in the form
-		    var serializedData = $form.serialize();
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:8000/portal/",
+			dataType: "json",
+			async: true,
+			data: {
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+			},
+			success: function (json) {
+				//$('#output').html(json.message);
+				$('#output').html('AJAX Success');
+				console.log('AJAX Success')
 
-		    // let's disable the inputs for the duration of the ajax request
-		    // Note: we disable elements AFTER the form data has been serialized.
-		    // Disabled form elements will not be serialized.
-		    $inputs.prop("disabled", true);
-
-		    // fire off the request to /form.php
-		    request = $.ajax({
-		        url: "/appointment.php",
-		        type: "post",
-		        data: serializedData
-		    });
-
-		    // callback handler that will be called on success
-		    request.done(function (response, textStatus, jqXHR){
-		        // log a message to the console
-		        console.log("Hooray, it worked!");
-		    });
-
-		    // callback handler that will be called on failure
-		    request.fail(function (jqXHR, textStatus, errorThrown){
-		        // log the error to the console
-		        console.error(
-		            "The following error occured: "+
-		            textStatus, errorThrown
-		        );
-		    });
-
-		    // callback handler that will be called regardless
-		    // if the request failed or succeeded
-		    request.always(function () {
-		        // reenable the inputs
-		        $inputs.prop("disabled", false);
-		    });
-
-		    // prevent default posting of form
-		    event.preventDefault();
+			}
 		});
 	}
+		// variable to hold request
+		// var request;
+		// // bind to the submit event of our form
+		// $("#appointment_form").submit(function(event){
+	 //    	// abort any pending request
+		//     if (request) {
+		//         request.abort();
+		//     }
+		//     // setup some local variables
+		//     var $form = $(this);
+		//     // let's select and cache all the fields
+		//     var $inputs = $form.find("input, email, text, select, button, textarea");
+		//     // serialize the data in the form
+		//     var serializedData = $form.serialize();
+
+		//     // let's disable the inputs for the duration of the ajax request
+		//     // Note: we disable elements AFTER the form data has been serialized.
+		//     // Disabled form elements will not be serialized.
+		//     $inputs.prop("disabled", true);
+
+		//     // fire off the request to /form.php
+		//     // request = $.ajax({
+		//     //     url: "/appointment.php",
+		//     //     type: "post",
+		//     //     data: serializedData
+		//     // });
+
+
+		//     // callback handler that will be called on success
+		//     // request.done(function (response, textStatus, jqXHR){
+		//     //     // log a message to the console
+		//     //     console.log("Hooray, it worked!");
+		//     // });
+
+		//     // // callback handler that will be called on failure
+		//     // request.fail(function (jqXHR, textStatus, errorThrown){
+		//     //     // log the error to the console
+		//     //     console.error(
+		//     //         "The following error occured: "+
+		//     //         textStatus, errorThrown
+		//     //     );
+		//     // });
+
+		//     // callback handler that will be called regardless
+		//     // // if the request failed or succeeded
+		//     // request.always(function () {
+		//     //     // reenable the inputs
+		//     //     $inputs.prop("disabled", false);
+		//     // });
+
+		//     // prevent default posting of form
+		//     event.preventDefault();
+	// 	});
+	// }
 
 	function selectClass() {
 		$('.dropdown-menu li').click(function(e){
