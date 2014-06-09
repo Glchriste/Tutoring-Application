@@ -19,12 +19,57 @@ import forms
 #     last_name = models.CharField(max_length=100, verbose_name=('Last Name'))
 #     email = models.EmailField(max_length=255, verbose_name=('Email'))
 
+# class AvailabilityEvent(models.Model):
+#     """
+#     Calendar Events (Tutor Availability)
+#     """
+#     CSS_CLASS_CHOICES = (
+#         ('', _('Normal')),
+#         ('event-warning', _('Warning')),
+#         ('event-info', _('Info')),
+#         ('event-success', _('Success')),
+#         ('event-inverse', _('Inverse')),
+#         ('event-special', _('Special')),
+#         ('event-important', _('Important')),
+#     )
+#     title = models.CharField(max_length=255, verbose_name=_('Title'))
+#     tutor = models.CharField(max_length=50, verbose_name=('Tutor'))
+#     tutor_email = models.EmailField(max_length=255, verbose_name=('Tutor Email'))
+#     #student = models.CharField(max_length=50, verbose_name=('Student'))
+#     #student_email = models.EmailField(max_length=255, verbose_name=('Student Email'))
+#     #course = models.CharField(max_length=50, verbose_name=('Course'))
+#     #url = models.URLField(verbose_name=_('URL'))
+#     url = 'http://www.example.com'
+#     #css_class = models.CharField(max_length=2,choices=CSS_CLASS_CHOICES,default='event-success')
+#     css_class = 'event-warning'
+#     start = models.DateTimeField(verbose_name=_('Start Date'))
+#     end = models.DateTimeField(verbose_name=_('End Date'), blank=True)
+
+
+#     @property
+#     def start_timestamp(self):
+#         """
+#         Return end date as timestamp
+#         """
+#         return datetime_to_timestamp(self.start)
+
+#     @property
+#     def end_timestamp(self):
+#         """
+#         Return end date as timestamp
+#         """
+#         return datetime_to_timestamp(self.end)
+
+#     def __unicode__(self):
+#         return self.title
+
 class CalendarEvent(models.Model):
     """
-    Calendar Events
+    Calendar Events (Appointment)
     """
     CSS_CLASS_CHOICES = (
         ('', _('Normal')),
+        ('event-primary', _('Primary')),
         ('event-warning', _('Warning')),
         ('event-info', _('Info')),
         ('event-success', _('Success')),
@@ -32,6 +77,7 @@ class CalendarEvent(models.Model):
         ('event-special', _('Special')),
         ('event-important', _('Important')),
     )
+    availability = models.BooleanField(default=True)
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     tutor = models.CharField(max_length=50, verbose_name=('Tutor'))
     tutor_email = models.EmailField(max_length=255, verbose_name=('Tutor Email'))
@@ -40,10 +86,10 @@ class CalendarEvent(models.Model):
     course = models.CharField(max_length=50, verbose_name=('Course'))
     #url = models.URLField(verbose_name=_('URL'))
     url = 'http://www.example.com'
-    #css_class = models.CharField(max_length=2,choices=CSS_CLASS_CHOICES,default='event-success')
-    css_class = 'event-success'
+    css_class = models.CharField(max_length=100,choices=CSS_CLASS_CHOICES,default='event-success')
     start = models.DateTimeField(verbose_name=_('Start Date'))
     end = models.DateTimeField(verbose_name=_('End Date'), blank=True)
+
 
     @property
     def start_timestamp(self):
@@ -64,7 +110,12 @@ class CalendarEvent(models.Model):
 
 ###Admin
 class CalendarEventAdmin(admin.ModelAdmin):
-    list_display = ["title", "tutor", "tutor_email", "student", "student_email", "css_class", "start", "end"]
+    list_display = ["availability", "title", "tutor", "tutor_email", "student", "student_email", "css_class", "start", "end"]
     list_filler = ["title"]
+
+# class AvailabilityEventAdmin(admin.ModelAdmin):
+#     list_display = ["title", "tutor", "tutor_email", "css_class", "start", "end"]
+#     list_filler = ["title"]
     
 admin.site.register(CalendarEvent,CalendarEventAdmin)
+# admin.site.register(AvailabilityEvent,AvailabilityEventAdmin)

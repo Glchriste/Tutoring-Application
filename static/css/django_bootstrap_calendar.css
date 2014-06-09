@@ -331,6 +331,9 @@
 .cal-event-list .event.pull-left {
   margin-top: 3px;
 }
+.event-primary {
+  background-color: #3276B1;
+}
 .event-important {
   background-color: #ad2121;
 }
@@ -344,7 +347,8 @@
   background-color: #1b1b1b;
 }
 .event-success {
-  background-color: #006400;
+  /*background-color: #006400;*/
+  background-color: #47A447;
 }
 .event-special {
   background-color: #800080;

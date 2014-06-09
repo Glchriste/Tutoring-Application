@@ -41,7 +41,7 @@ header("access-control-allow-origin: *");
 
 </head>
 
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/clockpicker.js"></script>
 <!-- <script type="text/javascript" src="{{STATIC_URL}}js/jquery-clockpicker.min.js"></script> -->
 
@@ -52,7 +52,8 @@ header("access-control-allow-origin: *");
 		<p>"Excellent tutoring at no cost to CCI students."</p>
 
 		<a class="btn btn-lg btn-primary" id="makeAppointment" data-toggle="modal" data-target="#appointment-modal" data-keyboard="true"><b>Make an Appointment</b></a>
-		<a class="btn btn-default btn-lg" id="#tutors" data-toggle="modal" data-target="#tutors-modal" data-keyboard="true">Tutors</a>
+		<a class="btn btn-default btn-lg" id="#filter" data-toggle="modal" data-target="#filter-modal" data-keyboard="true">Search</a>
+		<a class="btn btn-default btn-lg" id="#about" data-toggle="modal" data-target="#tutors-modal" data-keyboard="true">About</a>
 	</div>
 
 	<div class="page-header">
@@ -121,12 +122,31 @@ header("access-control-allow-origin: *");
 	<div class="clearfix"></div>
 	<br><br>
 
+	<div class="modal fade filter-modal" id="filter-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog filter-modal">
+			<div class="modal-content filter-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Search by Tutor, Class, or Time</h4>
+				</div>
+				<div class="modal-body" style="overflow-y: visible;">
+				<h4>Filter by Tutor</h4>
+				<h4>Filter by Course</h4>
+				<h4>Filter by Time</h4>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-search"></span> Search</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="modal fade tutors-modal" id="tutors-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog tutors-modal">
 			<div class="modal-content tutors-modal">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Tutors</h4>
+					<h4 class="modal-title">About</h4>
 				</div>
 				<div class="modal-body" style="overflow-y: visible;">
 				<p style="text-align: center">
@@ -218,11 +238,15 @@ header("access-control-allow-origin: *");
 					<option value="Chinmai">Chinmai</option>
 				</select>
 				<label for="date" style="padding-top: 10px;">Calendar Date</label>
-				<input type="text" id="date" name="date" class="form-control" placeholder=" Example: May 28 2014" style="padding: 6px;">
+				<div class="input-group datepicker" id = "datepicker" style="padding-bottom: 6px; padding-top: 6px;">
+				<input type="text" id="date" name="date" class="form-control" placeholder=" Example: May 28 2014" autocomplete="off">
+					<span class="input-group-addon">
+				        <span class="glyphicon glyphicon-calendar"></span>
+				    </span>
+				</div>
 				<label for="time" style="padding-top: 10px;">Preferred Time</label>
-				<!-- <input type="text" name="time" class="form-control" placeholder=" Example: 11:00AM. Hours: 8:00AM - 5:00PM" style="padding: 6px;"><br></br> -->
-				<div class="input-group clockpicker" id = "clockpicker" style="padding: 6px; padding-bottom: 20px;">
-				    <input type="text" class="form-control" id = "time" name="time" value="08:00AM">
+				<div class="input-group clockpicker" id = "clockpicker" style="padding-top: 6px; padding-bottom: 20px;">
+				    <input type="text" class="form-control" id = "time" name="time" value="08:00AM" autocomplete="off">
 				    <span class="input-group-addon">
 				        <span class="glyphicon glyphicon-time"></span>
 				    </span>
@@ -278,7 +302,9 @@ header("access-control-allow-origin: *");
 		          <input type="text" class="form-control" name="InputReal" id="InputReal" required>
 		          <span class="input-group-addon"><i class="glyphicon glyphicon-ok form-control-feedback"></i></span></div>
 		      </div> -->
-		      <input type="submit" name="submit" id="submit" value="Schedule Appointment" class="btn btn-info pull-right">
+		      	<input type="submit" name="submit" id="submit" value="Schedule Appointment" class="btn btn-info pull-right">
+		     	<!-- 
+		     	<button type="submit" name="submit" id="submit" value="Schedule Appointment" class="btn btn-info pull-right">Schedule Appointment  <span class="glyphicon glyphicon-calendar"></span></button> -->
 		      <!-- <input type="submit" name="submit" id="submit" value="Submit" onclick="submitAppointment()" class="btn btn-info pull-right"> -->
 		    </div>
 		  </form>
@@ -314,11 +340,12 @@ header("access-control-allow-origin: *");
 	<!-- Date Picker for the Date Input in the Appointment Form -->
 	<script>
 	  $(function() {
+	  	$("#date").css('z-index','1000000');
 	    $( "#date" ).datepicker();
 	  });
 	</script>
 
-	<script type="text/javascript" src="{{STATIC_URL}}portal/components/jquery/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="{{STATIC_URL}}portal/components/jquery/jquery.min.js"></script> -->
 	<script type="text/javascript" src="{{STATIC_URL}}portal/components/underscore/underscore-min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}portal/components/bootstrap3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}portal/components/jstimezonedetect/jstz.min.js"></script>
@@ -342,6 +369,29 @@ header("access-control-allow-origin: *");
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<!-- <script type="text/javascript" src="{{STATIC_URL}}portal/js/app.js"></script> -->
+{% if user.is_authenticated %}
+	Logged in as: {{ user.username }}
+	{% if user.username == 'student' %}
+		<script>
+			window.student = true;
+			window.tutor = false;
+			// console.log('Logged in as student');
+		</script>
+	{% elif user.username == 'admin' or user.username == 'tutor' %}
+		<script>
+			window.student = false;
+			window.tutor = true;
+			// console.log('Logged in as tutor');
+		</script>
+	{% endif %}
+{% else %}
+	
+	<script>
+		window.student = false;
+		window.tutor = false;
+	</script>
+{% endif %}
+
 {% load bootstrap_calendar %}
 {% bootstrap_calendar_css %}
 {% bootstrap_calendar_js language="template" %}
@@ -368,60 +418,6 @@ header("access-control-allow-origin: *");
 			}
 		});
 	}
-		// variable to hold request
-		// var request;
-		// // bind to the submit event of our form
-		// $("#appointment_form").submit(function(event){
-	 //    	// abort any pending request
-		//     if (request) {
-		//         request.abort();
-		//     }
-		//     // setup some local variables
-		//     var $form = $(this);
-		//     // let's select and cache all the fields
-		//     var $inputs = $form.find("input, email, text, select, button, textarea");
-		//     // serialize the data in the form
-		//     var serializedData = $form.serialize();
-
-		//     // let's disable the inputs for the duration of the ajax request
-		//     // Note: we disable elements AFTER the form data has been serialized.
-		//     // Disabled form elements will not be serialized.
-		//     $inputs.prop("disabled", true);
-
-		//     // fire off the request to /form.php
-		//     // request = $.ajax({
-		//     //     url: "/appointment.php",
-		//     //     type: "post",
-		//     //     data: serializedData
-		//     // });
-
-
-		//     // callback handler that will be called on success
-		//     // request.done(function (response, textStatus, jqXHR){
-		//     //     // log a message to the console
-		//     //     console.log("Hooray, it worked!");
-		//     // });
-
-		//     // // callback handler that will be called on failure
-		//     // request.fail(function (jqXHR, textStatus, errorThrown){
-		//     //     // log the error to the console
-		//     //     console.error(
-		//     //         "The following error occured: "+
-		//     //         textStatus, errorThrown
-		//     //     );
-		//     // });
-
-		//     // callback handler that will be called regardless
-		//     // // if the request failed or succeeded
-		//     // request.always(function () {
-		//     //     // reenable the inputs
-		//     //     $inputs.prop("disabled", false);
-		//     // });
-
-		//     // prevent default posting of form
-		//     event.preventDefault();
-	// 	});
-	// }
 
 	function selectClass() {
 		$('.dropdown-menu li').click(function(e){
@@ -457,5 +453,6 @@ header("access-control-allow-origin: *");
 	}
 	// getUnixTime("18-Apr-2014 19:00:00");
 </script>
+
 
 {% endblock %}

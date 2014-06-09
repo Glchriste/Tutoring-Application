@@ -7,9 +7,11 @@ from TutoringApplication.views import *
 from django.conf.urls import *
 #from django.conf.urls import patterns, include, url
 from TutoringApplication import views
+from django.views.generic import RedirectView
 
 urlpatterns = patterns('',
-    (r'^$', main_page),
+    # (r'^$', main_page),
+    (r'^$', RedirectView.as_view(url='portal/')),
     #Admin
     (r'^admin/', include(admin.site.urls)),
 

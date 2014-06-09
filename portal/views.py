@@ -15,8 +15,18 @@ from datetime import datetime, timedelta
 
 from django.shortcuts import redirect
 from django.core.mail import send_mail
+
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+def login_student(request):
+    user = authenticate(username = 'student', password = 'student')
+    user.backend = 'django.contrib.auth.backends.ModelBackend'
+    login(request, user)
+
 #############################################
-# Calendar Form Test
+# Calendar Form
 #############################################
 
 
@@ -26,6 +36,8 @@ def appt_form(request):
 
 def make_appt(request):
     #Appointment Form Input Values
+    login_student(request)
+
     first_name = ''
     last_name = ''
     email = ''
@@ -97,12 +109,15 @@ def make_appt(request):
 
     try:
         event = CalendarEvent()
+        event.availability = False
         title = 'Tutoring Appointment for ' + first_name + ' ' + last_name + ' with ' + tutor + ' at ' + time
+        #event.availability = False
         event.title = title
         event.tutor = tutor
         event.tutor_email = tutor_emails[tutor]
         event.student = first_name + ' ' + last_name
         event.course = course
+        event.css_class = 'event-primary'
         event.start = start
         event.end = end
         message = str(event) + ': <br></br>' + message
@@ -137,9 +152,10 @@ def search(request):
 #############################################
 # Main Calendar View
 #############################################
-@login_required
+
 def portal_main_page(request):
-    if request.method == 'POST':
+
+    #if request.method == 'POST':
         # form = AppointmentForm(request.POST, request.FILES)
 #         if form.is_valid():
 #             email = form.cleaned_data['email']
@@ -156,13 +172,17 @@ def portal_main_page(request):
 #             send_mail('Tutoring Appointment Scheduled', comment, email, recipients)
 
 
-            return HttpResponseRedirect(reverse('portal:portal_main_page'))
+            #return HttpResponseRedirect(reverse('portal:portal_main_page'))
+            
             #return render_to_response('portal/index.html')
-    else:
-        form = AppointmentForm()
+    #else:
+        #form = AppointmentForm()
  
-    data = {'form': form}
-    return render_to_response('portal/index.html', data, context_instance=RequestContext(request))
+    #data = {'form': form}
+    #return render_to_response('portal/index.html', data, context_instance=RequestContext(request))
+    login_student(request)
+    return HttpResponseRedirect('portal/index.html')
+        # return HttpResponseRedirect(reverse('portal:portal_main_page'))
 
 from django.views.generic import ListView, TemplateView
 from models import CalendarEvent
@@ -207,3 +227,7 @@ class CalendarJsonListView(ListView):
 class CalendarView(TemplateView):
 
     template_name = 'portal/index.html'
+
+    # @method_decorator(login_required)
+    # def dispatch(self, *args, **kwargs):
+    #     return super(CalendarView, self).dispatch(*args, **kwargs)
