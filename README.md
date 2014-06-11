@@ -12,7 +12,8 @@ A web application that allows students to make appointments with tutors in the C
 ###Installation
 1. Install [Django](https://www.djangoproject.com/)
 2. Install [Django-Bootstrap-3](https://github.com/dyve/django-bootstrap3)
-3. Install [jsmin 2.0.9](https://pypi.python.org/pypi/jsmin)
+3. Install [Django-Bootstrap-Calendar](https://github.com/sandlbn/django-bootstrap-calendar) (i.e., run `python setup.py install`)
+4. Install [jsmin 2.0.9](https://pypi.python.org/pypi/jsmin)
 
 ###How to Run
 1. `cd` into the "Tutoring-Application" folder
